@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Bypass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        a {
+            color: green;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>🔗 Link Bypass</h2>
+        <input type="text" id="linkInput" placeholder="Enter your link...">
+        <button onclick="bypassLink()">Bypass</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        async function bypassLink() {
+            const input = document.getElementById("linkInput").value.trim();
+            const resultBox = document.getElementById("result");
+
+            if (!input) {
+                resultBox.innerHTML = "⚠️ Please enter a link!";
+                return;
+            }
+
+            resultBox.innerHTML = "⏳ Processing...";
+
+            try {
+                // Call bypass.vip API
+                const response = await fetch(`https://api.bypass.vip/?url=${encodeURIComponent(input)}`);
+                const data = await response.json();
+
+                if (data && data.success && data.destination) {
+                    resultBox.innerHTML = `✅ Bypassed Link: <a href="${data.destination}" target="_blank">${data.destination}</a>`;
+                } else {
+                    resultBox.innerHTML = "❌ Failed to bypass this link.";
+                }
+            } catch (err) {
+                resultBox.innerHTML = "❌ Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+
+</html>
